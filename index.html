@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+    <style>
+        :root {
+            --font-size: 1.3em;
+            --b-size: 1.3em;
+        }
+
+        body {
+            background-color: black;
+            color: white;
+        }
+
+        body {
+            background-color: black;
+
+
+        }
+
+
+        li {
+            margin-bottom: 10px;
+        }
+
+
+        input {
+            background-color: rgb(146, 146, 146);
+        }
+
+        .todo-input {
+            width: 80%;
+            font-size: 1.3em;
+           
+        }
+
+        .deleteB {
+
+            background: #f63625;
+            border: none;
+            cursor: pointer;
+            padding: 0.5em;
+            font-size: 0.6em;
+        }
+
+        #add {
+            font-size: var(--b-size);
+        }
+        #clear{
+            font-size: calc( var(--b-size) - 0.8em);
+        }
+
+        li {
+            font-size:  var(--font-size);
+            padding-bottom: 0.6em;
+
+        }
+
+        .moveTask {
+            font-size: .7em;
+            float: right;
+        }
+    </style>
+    <script src="js/vue.global.js"></script>
+
+</head>
+
+<body>
+    <div id="app">
+        <h1> {{ title }}</h1>
+
+
+
+        <form @submit.prevent="addTodo" action="">
+            <label for=""></label>
+            <input ref="focusInput" class="todo-input" v-model="newTodo" type="" name="" id="focus" autocomplete="off">
+            <button id="add">Add</button>
+        </form>
+
+        <ul id="example-1">
+            <li v-for="(item, index) in todos" :key="item">
+                <button class="deleteB" @click="deleteTodo(index)"> X</button> {{ item }}
+                <br>
+                <button class="moveTask" @click="moveTask(index, 'up')">↑</button>
+                <button class="moveTask" @click="moveTask(index, 'down')">↓</button>
+
+            </li>
+
+        </ul>
+
+        <br><br>
+        <button id="clear" @click="clearTodo">Clear All</button>
+
+    </div>
+    <script>
+
+
+        var app = Vue.createApp({
+            data() {
+                return {
+                    title: 'Todo List',
+                    todos: JSON.parse(localStorage.getItem("todosVue")) || [],
+                    newTodo: ""
+                }
+
+            },
+            mounted(){
+                console.log(this.$refs.focusInput.focus());
+            },
+            methods: {
+                addTodo: function (event) {
+
+                    if (this.newTodo === "") { return; }
+                    this.todos.push(this.newTodo);
+
+                    localStorage.setItem("todosVue", JSON.stringify(this.todos));
+
+                    this.newTodo = "";
+
+                },
+                clearTodo: function () {
+
+                    this.todos = [];
+                    localStorage.setItem("todosVue", JSON.stringify([]));
+
+
+                },
+                deleteTodo: function (index) {
+                    this.todos.splice(index, 1);
+                    localStorage.setItem("todosVue", JSON.stringify(this.todos));
+
+                },
+                moveTask: function (index, direction) {
+
+                    if (direction === "up" && this.todos[index - 1]) {
+                        let temp = this.todos[index];
+                        this.todos[index] = this.todos[index - 1];
+                        this.todos[index - 1] = temp;
+                    } else if (direction === "down" && this.todos[index + 1]) {
+                        let temp = this.todos[index];
+                        this.todos[index] = this.todos[index + 1];
+                        this.todos[index + 1] = temp;
+                    }
+                    localStorage.setItem("todosVue", JSON.stringify(this.todos));
+                }
+
+
+            }
+        })
+        app.mount('#app');
+  
+    </script>
+</body>
+
+</html>
