@@ -115,7 +115,7 @@
                 addTodo: function (event) {
 
                     if (this.newTodo === "") { return; }
-                    this.todos.push(this.newTodo);
+                    this.todos.unshift(this.newTodo);
 
                     localStorage.setItem("todosVue", JSON.stringify(this.todos));
 
