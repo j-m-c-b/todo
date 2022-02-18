@@ -35,7 +35,7 @@
         .todo-input {
             width: 80%;
             font-size: 1.3em;
-           
+
         }
 
         .deleteB {
@@ -50,12 +50,13 @@
         #add {
             font-size: var(--b-size);
         }
-        #clear{
-            font-size: calc( var(--b-size) - 0.8em);
+
+        #clear {
+            font-size: calc(var(--b-size) - 0.8em);
         }
 
         li {
-            font-size:  var(--font-size);
+            font-size: var(--font-size);
             padding-bottom: 0.6em;
 
         }
@@ -82,8 +83,8 @@
         </form>
 
         <ul id="example-1">
-            <li v-for="(item, index) in todos" :key="item">
-                <button class="deleteB" @click="deleteTodo(index)"> X</button> {{ item }}
+            <li v-for="(item, index) in todos" :key="item" :title="item.title">
+                <button class="deleteB" @click="deleteTodo(index)"> X</button> {{ item.todoText }}
                 <br>
                 <button class="moveTask" @click="moveTask(index, 'up')">↑</button>
                 <button class="moveTask" @click="moveTask(index, 'down')">↓</button>
@@ -108,14 +109,20 @@
                 }
 
             },
-            mounted(){
+            mounted() {
                 this.$refs.focusInput.focus();
             },
             methods: {
                 addTodo: function (event) {
 
+                    const date = new Date();
+                    const fecha = `${date.getDate().toString().padStart(2, "0")}-${(date.getMonth() + 1).toString().padStart(2, "0")}-${date.getFullYear()}`;
+                    const hora = `${date.getHours().toString().padStart(2, "0")}:${date.getMinutes().toString().padStart(2, "0")}:${date.getSeconds().toString().padStart(2, "0")}`;
                     if (this.newTodo === "") { return; }
-                    this.todos.unshift(this.newTodo);
+                    this.todos.unshift({
+                        todoText: this.newTodo,
+                        title: fecha + " " + hora
+                    });
 
                     localStorage.setItem("todosVue", JSON.stringify(this.todos));
 
@@ -152,7 +159,7 @@
             }
         })
         app.mount('#app');
-  
+
     </script>
 </body>
 
