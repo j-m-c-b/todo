@@ -45,10 +45,22 @@
             cursor: pointer;
             padding: 0.5em;
             font-size: 0.6em;
+            user-select: none;
+        }
+
+        .copyB {
+
+            background: #356210;
+            border: none;
+            cursor: pointer;
+            padding: 0.5em;
+            font-size: 0.6em;
+            user-select: none;
         }
 
         #add {
             font-size: var(--b-size);
+            margin-left: 5px;
         }
 
         #clear {
@@ -64,6 +76,62 @@
         .moveTask {
             font-size: .7em;
             float: right;
+        }
+
+        #focus {
+            background-color: #272822;
+            color: #f8f8f2;
+            border: none;
+            padding: 10px;
+            font-family: sans-serif;
+        }
+
+        button {
+            background-color: #3c3c3c;
+            border: none;
+            color: #fff;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        button:hover {
+            background-color: #5c5c5c;
+            cursor: pointer;
+        }
+
+        button:focus {
+            outline: none;
+        }
+
+        button:focus {
+            outline: 2px solid #fff;
+            outline-offset: 2px;
+        }
+
+        .deleteB,
+        .copyB {
+            color: black;
+        }
+
+        .indexBShow {
+            display: inline-block;
+            font-size: 0.75em;
+            background-color: #444;
+            color: #fff;
+            padding: 0.2em 0.5em;
+
+            margin-right: 0.1em;
+            border-radius: 5px;
+
+            padding: 0.5em;
+            font-size: 0.6em;
+        }
+
+        ul {
+            list-style-type: none;
+            padding-left: 10px;
         }
     </style>
     <script src="js/vue.global.js"></script>
@@ -84,7 +152,11 @@
 
         <ul id="example-1">
             <li v-for="(item, index) in todos" :key="item" :title="item.title">
-                <button class="deleteB" @click="deleteTodo(index)"> X</button> {{ item.todoText }}
+
+                <button class="deleteB" @click="deleteTodo(index)"> X</button>
+                <span class="indexBShow">{{ index }}</span>
+                <button class="copyB" @click="copyTodo(index)"> C</button>
+                {{ item.todoText }}
                 <br>
                 <button class="moveTask" @click="moveTask(index, 'up')">↑</button>
                 <button class="moveTask" @click="moveTask(index, 'down')">↓</button>
@@ -98,6 +170,8 @@
 
     </div>
     <script>
+
+
 
 
         var app = Vue.createApp({
@@ -119,6 +193,24 @@
                     const fecha = `${date.getDate().toString().padStart(2, "0")}-${(date.getMonth() + 1).toString().padStart(2, "0")}-${date.getFullYear()}`;
                     const hora = `${date.getHours().toString().padStart(2, "0")}:${date.getMinutes().toString().padStart(2, "0")}:${date.getSeconds().toString().padStart(2, "0")}`;
                     if (this.newTodo === "") { return; }
+                    // if (this.newTodo === "e l" || this.newTodo === "E L") {
+                    //     this.todos.splice(0, 1);
+                    //     localStorage.setItem("todosVue", JSON.stringify(this.todos));
+                    //     this.newTodo = "";
+                    //     return;
+                    // }
+                    if (this.newTodo.length > 1 && this.newTodo.length < 5 && this.newTodo[0].toLowerCase() === "c" && !isNaN(this.newTodo.toLowerCase().replace("c", ""))) {
+                        this.copyTodo(this.newTodo.replace("c", "").replace("C", ""));
+                        return;
+                    }
+                    if (this.newTodo.length > 1 && this.newTodo.length < 6 && this.newTodo[0].toLowerCase() === "e" && this.newTodo[1].toLowerCase() === "e"
+                        && !isNaN(this.newTodo.replace("e", "").replace("e", "").replace("E", "").replace("E", ""))) {
+                        this.deleteTodo(this.newTodo.replace("e", "").replace("e", "").replace("E", "").replace("E", ""));
+                        return;
+                    }
+                    if (this.newTodo.includes("ddd")) {
+                        this.newTodo = this.newTodo.replace("ddd", fecha + " " + hora)
+                    }
                     this.todos.unshift({
                         todoText: this.newTodo,
                         title: fecha + " " + hora
@@ -143,18 +235,32 @@
                 },
                 moveTask: function (index, direction) {
 
-                    if (direction === "up" && this.todos[index - 1]) {
-                        let temp = this.todos[index];
-                        this.todos[index] = this.todos[index - 1];
-                        this.todos[index - 1] = temp;
+                    if (direction === "up" && this.todos[0]) {
+                        // let temp = this.todos[index];
+                        // this.todos[index] = this.todos[index - 1];
+                        // this.todos[index - 1] = temp;
+                        this.todos.unshift(this.todos.splice(index, 1)[0]);
+
                     } else if (direction === "down" && this.todos[index + 1]) {
                         let temp = this.todos[index];
                         this.todos[index] = this.todos[index + 1];
                         this.todos[index + 1] = temp;
                     }
                     localStorage.setItem("todosVue", JSON.stringify(this.todos));
-                }
+                },
+                copyTodo: function (index) {
+                    let textarea = document.createElement("textarea");
+                    let value = this.todos[index].todoText.split("-n-").join("\n");
+                    if (this.todos[index].todoText.includes("-e-")) {
+                        value = value.split("-e-")[0];
+                    }
+                    textarea.value = value;
+                    document.body.appendChild(textarea);
 
+                    textarea.select();
+                    document.execCommand("Copy");
+                    textarea.remove();
+                },
 
             }
         })
