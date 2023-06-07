@@ -127,6 +127,7 @@
 
             padding: 0.5em;
             font-size: 0.6em;
+            user-select: none;
         }
 
         ul {
@@ -202,6 +203,28 @@
                     if (this.newTodo.length > 1 && this.newTodo.length < 5 && this.newTodo[0].toLowerCase() === "c" && !isNaN(this.newTodo.toLowerCase().replace("c", ""))) {
                         this.copyTodo(this.newTodo.replace("c", "").replace("C", ""));
                         return;
+                    }
+                    if (this.newTodo.toLowerCase().startsWith("edit") && (this.newTodo.split(" ").length === 2)) {
+                        if (!isNaN(this.newTodo.split(" ")[1])) {
+                            let indexEdit = this.newTodo.split(" ")[1]
+                            if (indexEdit >= 0 && indexEdit < this.todos.length) {
+                                let userInput = prompt("New text:", this.todos[indexEdit].todoText);
+
+                                if (userInput === null) {
+                                    alert('User cancelled the input.'); // Perform any action you want when user cancels
+                                    this.newTodo = "";
+                                    return;
+                                } else {
+                                    this.todos[indexEdit].todoText = userInput // Process the user input
+                                    localStorage.setItem("todosVue", JSON.stringify(this.todos));
+                                    this.newTodo = "";
+                                    return;
+                                }
+
+
+
+                            }
+                        }
                     }
                     if (this.newTodo.length > 1 && this.newTodo.length < 6 && this.newTodo[0].toLowerCase() === "e" && this.newTodo[1].toLowerCase() === "e"
                         && !isNaN(this.newTodo.replace("e", "").replace("e", "").replace("E", "").replace("E", ""))) {
