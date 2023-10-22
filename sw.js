@@ -32,7 +32,11 @@ self.addEventListener('install', function (e) {
     caches.open(CACHE_NAME).then(function (cache) {
       console.log('installing cache : ' + CACHE_NAME);
       console.log(URLS);
-      return cache.addAll(URLS);
+      return cache.addAll(URLS)
+      .catch(function (error) {
+        console.error('Cache addAll error:', error)
+      });
+      
     })
   )
 })
