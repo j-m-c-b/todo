@@ -180,7 +180,7 @@
 
         <br><br>
         <button id="clear" @click="clearTodo">Clear All</button>
-        <button id="createOflline" onclick="createOfflineWorker()">Create Offline</button>
+     
     </div>
     <script>
 
@@ -303,23 +303,6 @@
 
     </script>
 
-    <script>
-        function createOfflineWorker() {
-            if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('service-worker.js')
-                    .then(function (registration) {
-                        alert('Service Worker registered with scope: ' + registration.scope);
-                    })
-                    .catch(function (error) {
-                        alert('Service Worker registration failed: ' + error);
-                    });
-            } else {
-                alert("no 'serviceWorker' in navigator")
-            }
-        }
-
-
-    </script>
 </body>
 
 </html>
