@@ -2,7 +2,7 @@ var APP_PREFIX = 'todoapp'     // Identifier for this app (this needs to be cons
 var VERSION = 'version_01'              // Version of the off-line cache (change this value everytime you want to update cache)
 var CACHE_NAME = APP_PREFIX + VERSION
 var URLS = [                            // Add URL you want to cache in this list.
-  '/j-m-c-b/',                     // If you have separate JS/CSS files,
+ // '/j-m-c-b/',                     // If you have separate JS/CSS files,
   '/j-m-c-b/index.html',            // add path to those files here
   '/j-m-c-b/js/vue.global.js',  
 ]
