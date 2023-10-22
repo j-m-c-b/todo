@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Todo List</title>
+    <link rel="canonical" href="https:///j-m-c-b.github.io/todo/" />
     <style>
         :root {
             --font-size: 1.3em;
@@ -63,7 +64,8 @@
             margin-left: 5px;
         }
 
-        #clear, #createOflline {
+        #clear,
+        #createOflline {
             font-size: calc(var(--b-size) - 0.8em);
         }
 
@@ -135,11 +137,21 @@
             padding-left: 10px;
         }
     </style>
-    <script src="js/vue.global.js"></script>
+
 
 </head>
 
 <body>
+    <script>
+        // register ServiceWorker, remember to use absolute path!
+        if (navigator.serviceWorker) {
+            navigator.serviceWorker.register('/{repository}/sw.js', { scope: '/{repository}/' })
+        }
+
+        // --- Application code here ---
+    </script>
+
+    <script src="js/vue.global.js"></script>
     <div id="app">
         <h1> {{ title }}</h1>
 
