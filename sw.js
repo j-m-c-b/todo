@@ -3,8 +3,8 @@ var VERSION = 'version_01'              // Version of the off-line cache (change
 var CACHE_NAME = APP_PREFIX + VERSION
 var URLS = [                            // Add URL you want to cache in this list.
                    // If you have separate JS/CSS files,
-  '/j-m-c-b/index.html',            // add path to those files here
-  '/j-m-c-b/js/vue.global.js',  
+  '/j-m-c-b/todo/index.html',            // add path to those files here
+  '/j-m-c-b/todo/js/vue.global.js',  
 ]
 
 // Respond with cached resources
