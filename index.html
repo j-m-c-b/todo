@@ -63,7 +63,7 @@
             margin-left: 5px;
         }
 
-        #clear {
+        #clear, #createOflline {
             font-size: calc(var(--b-size) - 0.8em);
         }
 
@@ -168,7 +168,7 @@
 
         <br><br>
         <button id="clear" @click="clearTodo">Clear All</button>
-
+        <button id="createOflline" onclick="createOfflineWorker()">Create Offline</button>
     </div>
     <script>
 
@@ -292,17 +292,21 @@
     </script>
 
     <script>
-        /*
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('service-worker.js')
-                .then(function (registration) {
-                    console.log('Service Worker registered with scope:', registration.scope);
-                })
-                .catch(function (error) {
-                    console.error('Service Worker registration failed:', error);
-                });
+        function createOfflineWorker() {
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('service-worker.js')
+                    .then(function (registration) {
+                        alert('Service Worker registered with scope: ' + registration.scope);
+                    })
+                    .catch(function (error) {
+                        alert('Service Worker registration failed: ' + error);
+                    });
+            } else {
+                alert("no 'serviceWorker' in navigator")
+            }
         }
-        */
+
+
     </script>
 </body>
 
