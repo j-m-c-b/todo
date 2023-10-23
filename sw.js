@@ -5,6 +5,10 @@ var URLS = [
   'https://j-m-c-b.github.io/todo',                        // Add URL you want to cache in this list.
 'https://j-m-c-b.github.io/todo/',                // If you have separate JS/CSS files,
   'https://j-m-c-b.github.io/todo/index.html',            // add path to those files here 
+
+  'https://j-m-c-b.github.io/screenCalulator',                        // Add URL you want to cache in this list.
+  'https://j-m-c-b.github.io/screenCalulator/',                // If you have separate JS/CSS files,
+             // add path to those files here
 ]
 
 // Respond with cached resources
