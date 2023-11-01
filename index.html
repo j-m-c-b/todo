@@ -136,6 +136,20 @@
             list-style-type: none;
             padding-left: 10px;
         }
+
+
+        a:link {
+            color: #0074d9;
+            text-decoration: none;
+       
+        }
+
+
+        a:visited {
+            color: #0074d9;
+            
+        }
+
     </style>
 
 
@@ -162,20 +176,20 @@
             <input ref="focusInput" class="todo-input" v-model="newTodo" type="" name="" id="focus" autocomplete="off">
             <button id="add">Add</button>
         </form>
-
         <ul id="example-1">
-            <li v-for="(item, index) in todos" :key="item" :title="item.title">
-
-                <button class="deleteB" @click="deleteTodo(index)"> X</button>
+            <li v-for="(item, index) in todos" :key="item.title">
+                <button class="deleteB" @click="deleteTodo(index)">X</button>
                 <span class="indexBShow">{{ index }}</span>
-                <button class="copyB" @click="copyTodo(index)"> C</button>
-                {{ item.todoText }}
+                <button class="copyB" @click="copyTodo(index)">C</button>
+                <span v-if="item.todoText.endsWith('--l')">
+                    <a :href="item.todoText.replace(/--l$/, '')" target="_blank" :title="item.title">{{
+                        item.todoText.replace(/--l$/, '') }}</a>
+                </span>
+                <span v-else :title="item.title">{{ item.todoText }}</span>
                 <br>
                 <button class="moveTask" @click="moveTask(index, 'up')">↑</button>
                 <button class="moveTask" @click="moveTask(index, 'down')">↓</button>
-
             </li>
-
         </ul>
 
         <br><br>
