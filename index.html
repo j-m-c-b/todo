@@ -161,9 +161,13 @@
 <body>
     <script>
         // register ServiceWorker, remember to use absolute path!
+   //     if (navigator.serviceWorker) {
+    //        navigator.serviceWorker.register('/todo/sw.js', { scope: '/todo/' })
+    //    }
+
         if (navigator.serviceWorker) {
-            navigator.serviceWorker.register('/todo/sw.js', { scope: '/todo/' })
-        }
+        navigator.serviceWorker.register('/todo/sw.js', { scope: '/' });
+       }
 
         // --- Application code here ---
     </script>
