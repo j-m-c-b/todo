@@ -8,9 +8,6 @@ var URLS = [
   'https://j-m-c-b.github.io/todo/js/vue.global.js',
   'https://j-m-c-b.github.io/screenCalulator',                        // Add URL you want to cache in this list.
   'https://j-m-c-b.github.io/screenCalulator/',                // If you have separate JS/CSS files,
-            
-'https://j-m-c-b.github.io/ProQr/caDupli-master/files/JSON/consult.html',
-'https://j-m-c-b.github.io/ProQr/caDupli-master/files/JSON/html5-qrcode.min.js'
 ]
 
 // Respond with cached resources
